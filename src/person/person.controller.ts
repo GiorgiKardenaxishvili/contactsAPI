@@ -6,7 +6,7 @@ export class PersonController {
     constructor(private readonly personService: PersonService) { }
 
     @Get()
-    getHello(): string {
-        return this.personService.getHello();
+    async getHello() {
+        return await this.personService.getHello();
     }
 }

@@ -1,15 +1,20 @@
 import { Module } from '@nestjs/common';
 import { PersonController } from './person.controller';
 import { PersonService } from './person.service';
-import { MongooseModule, getModelToken, InjectModel } from '@nestjs/mongoose';
-import { Mongoose, Model } from 'mongoose';
-import { Person } from 'classes/person';
-import { PersonSchema } from 'schemas/person.schema';
+import { MongooseModule } from '@nestjs/mongoose';
+import { GroupSchema } from './schemas/group.schema';
+
 
 @Module({
-    imports: [MongooseModule.forFeature([{ name: Person.name, schema: PersonSchema }]), PersonModule],
-    controllers: [PersonController],
-    providers: [PersonService],
+  imports: [
+    /**
+     * mongodb://192.168.4.169:27017/testg ამის მაგივრად შენი ლოკალური მონგოს მისამართი მიუთითე..
+     * ან MSDA ში რომ მოხვალ შეძლებ ამ მისამართთან კავშირს.
+     */
+    MongooseModule.forRoot('mongodb://192.168.4.169:27017/testg'),
+    MongooseModule.forFeature([{ name: 'Group', schema: GroupSchema }]),
+  ],
+  controllers: [PersonController],
+  providers: [PersonService],
 })
-
-export class PersonModule { }
+export class PersonModule {}

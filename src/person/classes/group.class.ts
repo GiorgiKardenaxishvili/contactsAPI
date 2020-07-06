@@ -1,5 +1,4 @@
 import { IBase, Update, Delete } from "base";
-import { Person } from "./person";
 import { Prop } from "@nestjs/mongoose";
 import { Document } from "mongoose";
 
@@ -7,9 +6,6 @@ export class Group extends Document implements IBase {
 
     @Prop({ required: true })
     name: string;
-
-    @Prop()
-    people: Person[] = [];
 
     @Prop()
     creationDate: Date = new Date();

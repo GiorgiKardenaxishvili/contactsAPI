@@ -1,25 +1,16 @@
-import { Model, Connection } from 'mongoose';
+import { Model } from 'mongoose';
 import { Injectable } from '@nestjs/common';
-import { InjectModel, InjectConnection } from '@nestjs/mongoose';
-import { Person } from 'classes/person';
-import { CreatePersonDto } from 'dto/createPerson.dto';
+import { InjectModel } from '@nestjs/mongoose';
+import { Group } from './classes/group.class';
 
 @Injectable()
 export class PersonService {
+  constructor(
+    @InjectModel('Group') private readonly GroupModel: Model<Group>,
+  ) {}
 
-    constructor(@InjectModel(Person.name) private PersonModel: Model<Person>, @InjectConnection('persons') private connection: Connection) {}
-
-    
-    async create(createPersonDto: CreatePersonDto): Promise<Person> {
-        const createdPerson = new this.PersonModel(createPersonDto);
-        return createdPerson.save();
-      }
-
-      async findAll(): Promise<Person[]> {
-        return this.PersonModel.find().exec();
-      }
-
-    getHello(): string {
-        return 'Hello World-2!';
-    }
+  async getHello() {
+    await this.GroupModel.find({ name: 'test' });
+    return 'Hello World-2!';
+  }
 }
